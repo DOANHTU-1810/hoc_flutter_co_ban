@@ -34,27 +34,25 @@ class MyTextField extends StatelessWidget {
           child: SvgPicture.asset(iconPath!),
         ),
         suffixIcon: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(10),
           child: SvgPicture.asset(suffixIcon!,),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+        enabledBorder:  OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(10)
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(color: Colors.green),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color:Color(0xffE8E8E8)),
-        ),
+        
         fillColor: Colors.white,
         filled: true,
         //label: Text('Name'),
         //labelStyle: TextStyle(),
         hintText: hintText,
-        hintStyle: const TextStyle(
-          color: Colors.green,
+        hintStyle:  TextStyle(
+          color: Colors.green.withOpacity(0.3),
 
         ),
       ),

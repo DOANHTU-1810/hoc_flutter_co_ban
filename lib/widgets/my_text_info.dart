@@ -3,17 +3,22 @@ import 'package:flutter_svg/svg.dart';
 class MyTextInfo extends StatefulWidget {
   String label;
   TextEditingController textController = TextEditingController();
-   MyTextInfo({super.key, required this.label, required this.textController});
+   MyTextInfo({super.key, required this.label, required this.textController, });
+
 
   @override
   State<MyTextInfo> createState() => _MyTextInfoState();
 }
 
 class _MyTextInfoState extends State<MyTextInfo> {
-  bool onOff = true;
 
+bool onOff = true;
+void onTap(){
+  onOff = !onOff;
+  setState(() {
 
-
+  });
+}
   @override
   Widget build(BuildContext context) {
 
@@ -64,12 +69,7 @@ class _MyTextInfoState extends State<MyTextInfo> {
                 ),
                 SizedBox(width: 5,),
                 GestureDetector(
-                  onTap: (){
-                    onOff = !onOff;
-
-                    setState(() {});
-
-                  },
+                  onTap: onTap,
                   child: onOff ? SvgPicture.asset('images/icon/ic_edit.svg', width: 30,height: 30,) :SvgPicture.asset('images/icon/ic_close.svg', width: 30,height: 30,),
                 )
 

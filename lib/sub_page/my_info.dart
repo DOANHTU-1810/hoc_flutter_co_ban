@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hoc_flutter_co_ban/widgets/my_text_info.dart';
+import 'package:hoc_flutter_co_ban/widgets/show_bottom_sheet.dart';
 
 
 class MyInfo extends StatefulWidget {
@@ -21,7 +22,13 @@ class _MyInfoState extends State<MyInfo> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController telegramController = TextEditingController();
+  bool onOff = true;
 
+ void onTap (){
+  onOff = !onOff;
+  setState(() {});
+  print(onOff);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +92,7 @@ class _MyInfoState extends State<MyInfo> {
                                     children: [
                                       const SizedBox(height: 70,),
                                       MyTextInfo(label: 'Tên ', textController: textController),
-                                      MyTextInfo(label: 'Giới tính ', textController: genderController),
+                                      ShowBottomSheet(label: 'Giới tính ', textController: genderController),
                                       MyTextInfo(label: 'Ngày sinh ', textController: birthController),
                                       MyTextInfo(label: 'Số điện thoại ', textController: phoneController),
                                       MyTextInfo(label: 'Email ', textController: emailController),

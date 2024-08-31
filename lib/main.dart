@@ -31,8 +31,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
 
-     Widget build(BuildContext context) {
-       int  count = 0;
+     @override
+  Widget build(BuildContext context) {
+
        return MaterialApp(
        home: const MyScaffoldApp(),
 
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           PageFourth.routeName: (_)=> PageFourth(),
           FifthPage.routeName: (_)=> const FifthPage(),
           'Page1': (_)=> const Page1(),
-          'Page2': (_)=> const Page2(),
+          'Page2': (_)=> Page2(),
           'Page3': (_)=> const Page3(),
           'Page4': (_)=> const Page4(),
           'Page5': (_)=> const Page5(),
