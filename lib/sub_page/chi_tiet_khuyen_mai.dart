@@ -4,7 +4,23 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hoc_flutter_co_ban/widgets/detail_info.dart';
 class DetailSaleOff extends StatelessWidget {
-  const DetailSaleOff({super.key});
+   DetailSaleOff({
+     super.key,
+     required this.startTime,
+     required this.startDate,
+     required this.endTime,
+     required this.endDate,
+     required this. nameController,
+     required this.giamGiaController,
+     required this.reduceTypeSelected
+   });
+  TimeOfDay startTime;
+  DateTime endTime;
+  DateTime startDate;
+  DateTime endDate;
+  TextEditingController nameController = TextEditingController();
+   TextEditingController giamGiaController = TextEditingController();
+   String reduceTypeSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +57,12 @@ class DetailSaleOff extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   height: 50,
                   color: Colors.white,
-                  child: const Column(
+                  child:  Column(
                       children: [
-                        SizedBox(width: 10,),
-                        Text('Khuyến mãi trên live ',style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500)),
-                        Text('00:00, 20/03/2024 - 00:00, 24/03/2024'),
+                        const SizedBox(width: 10,),
+                         Text(nameController.text,style: const TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500)),
+                        Text('${startTime.hour}:${startTime.minute}, ${startDate.day}/${startDate.month}/${startDate.year} - '
+                            '${endDate.hour}:${endDate.minute}, ${endDate.day}/${endDate.month}/${endDate.year}'),
                       ]
 
                   ),
@@ -64,9 +81,9 @@ class DetailSaleOff extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       DetailInfo(label: 'Người tạo ', value: 'Nhà hàng'),
-                      DetailInfo(label: 'Ngày tạo ', value: '20/03/2024'),
-                      DetailInfo(label: 'Khuyến mãi áp duụng cho ', value: 'Món được chọn'),
-                      DetailInfo(label: 'Loại khuyến mãi ', value: 'Giảm % giá món'),
+                      DetailInfo(label: 'Ngày tạo ', value: '${startDate.day}/${startDate.month}/${startDate.year}'),
+                      DetailInfo(label: 'Khuyến mãi áp dụng cho ', value: 'Món được chọn'),
+                      DetailInfo(label: 'Loại khuyến mãi ', value: reduceTypeSelected),
                       DetailInfo(label: 'Số lượng áp dụng ', value: 'Áp dụng'),
                       DetailInfo(label: 'Áp dụng ', value: 'Từng món'),
                     ],
@@ -128,18 +145,18 @@ class DetailSaleOff extends StatelessWidget {
                   ),
                   const SizedBox(height: 20,),
                   // info 2
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                   Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SizedBox(
                       height: 112,
                       child: Column(
                         children: [
-                          Text('Cài đặt khuyến mãi'),
+                          const Text('Cài đặt khuyến mãi'),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Tỉ lệ giảm giá'),
-                              Text('20%'),
+                              const Text('Tỉ lệ giảm giá'),
+                              Text(giamGiaController.text),
                             ],
                           ),
                         ],

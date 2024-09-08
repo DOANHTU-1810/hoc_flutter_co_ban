@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hoc_flutter_co_ban/sub_page/chi_tiet_khuyen_mai.dart';
 import 'package:hoc_flutter_co_ban/widgets/my_text_field.dart';
@@ -15,6 +16,40 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
   int? _value;
   TextEditingController nameController = TextEditingController();
   TextEditingController reduceController = TextEditingController();
+
+    DateTime _dateTime = DateTime.now();
+    DateTime endTime = DateTime.now();
+  DateTime endDate = DateTime.now();
+    TimeOfDay _timeOfDay = TimeOfDay.now();
+    String reduceTypeSelected = '';
+
+
+  
+  _showDatePicker(){
+      showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2020),
+          lastDate: DateTime(2030)
+      ).then((value){
+        setState(() {
+          _dateTime = value!;
+        });
+      });
+  }
+
+  _showTimePicker(){
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    ).then((value){
+      setState(() {
+        _timeOfDay = value!;
+      });
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -89,23 +124,28 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
                           children: [
                               const Text('Giờ bắt đầu'),
                             const SizedBox(height: 8,),
-                            Container(
-                              height: 44,
-                              width: 166,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  const Text('00:00'),
-                                  SvgPicture.asset('images/icon/ic_clock.svg')
-                                ],
-                              ),
-                            )
+                                GestureDetector(
+                                  onTap: _showTimePicker,
+                                  child: Container(
+                                    height: 44,
+                                    width: 166,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.black,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                         Text(_timeOfDay.format(context).toString()),
+                                        SvgPicture.asset('images/icon/ic_clock.svg')
+                                      ],
+                                    ),
+                                  ),
+                                )
+
+
                           ],
                         ),
                         // ngày bắt đầu
@@ -114,21 +154,25 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
                           children: [
                             const Text('Ngày bắt đầu '),
                             const SizedBox(height: 8,),
-                            Container(
-                              height: 44,
-                              width: 166,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
+                            GestureDetector(
+                              onTap: _showDatePicker,
+
+                              child: Container(
+                                height: 44,
+                                width: 166,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  const Text('dd/mm/yyyy'),
-                                  SvgPicture.asset('images/icon/ic_calendar.svg')
-                                ],
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                     Text('${_dateTime.day}/${_dateTime.month}/${_dateTime.year}'),
+                                    SvgPicture.asset('images/icon/ic_calendar.svg')
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -145,21 +189,42 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
                           children: [
                             const Text('Giờ kết thúc'),
                             const SizedBox(height: 8,),
-                            Container(
-                              height: 44,
-                              width: 166,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
+                            InkWell(
+                              onTap:()=> showCupertinoModalPopup(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    height: MediaQuery.of(context).size.height*0.4,
+                                    color: Colors.white,
+                                    child: Expanded(
+                                      child: CupertinoDatePicker(
+
+                                        onDateTimeChanged: (date){
+                                          setState(() {
+                                            endTime = date;
+                                          });
+                                        },
+                                      ),
+                                    )
+                                  );
+                                },
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  const Text('00:00'),
-                                  SvgPicture.asset('images/icon/ic_clock.svg')
-                                ],
+                              child: Container(
+                                height: 44,
+                                width: 166,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                     Text('${endTime.hour}:${endTime.minute}'),
+                                    SvgPicture.asset('images/icon/ic_clock.svg')
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -170,21 +235,37 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
                           children: [
                             const Text('Ngày kết thúc '),
                             const SizedBox(height: 8,),
-                            Container(
-                              height: 44,
-                              width: 166,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
+                            GestureDetector(
+                              onTap: () {
+                                DatePicker.showDatePicker(
+                                  context,
+                                  maxDateTime: DateTime(2030,4,5),
+                                  minDateTime: DateTime.now(),
+                                  initialDateTime: endDate,
+                                  onConfirm: (dateTime,_){
+                                    setState(() {
+                                      endDate = dateTime;
+                                    });
+                                  },
+                                );
+
+                              },
+                              child: Container(
+                                height: 44,
+                                width: 166,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  const Text('dd/mm/yyyy'),
-                                  SvgPicture.asset('images/icon/ic_calendar.svg')
-                                ],
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                     Text('${endDate.day}/${endDate.month}/${endDate.year}'),
+                                    SvgPicture.asset('images/icon/ic_calendar.svg')
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -198,21 +279,69 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
                       children: [
                         const Text('Loại khuyên mãi '),
                         const SizedBox(height: 8,),
-                        Container(
-                          height: 44,
-                          width: 343,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
+                        GestureDetector(
+                          onTap: (){
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    height: 300,
+                                    width: double.infinity,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 20,),
+                                        GestureDetector(
+                                            onTap:(){
+                                              setState(() {
+                                                reduceTypeSelected = 'Giam % gia mon';
+                                              });
+                                              Navigator.pop(context);
+                                            } ,
+                                            child: const Text('Giam % gia mon')
+                                        ),
+                                        SizedBox(height: 20,),
+                                        GestureDetector(
+                                            onTap:(){
+                                              setState(() {
+                                                reduceTypeSelected = 'Nhap ma giam gia';
+                                              });
+                                              Navigator.pop(context);
+                                            } ,
+                                            child: const Text('Nhap ma giam gia')
+                                        ),
+                                        SizedBox(height: 20,),
+                                        GestureDetector(
+                                            onTap:(){
+                                              setState(() {
+                                                reduceTypeSelected = 'Mien phi';
+                                              });
+                                              Navigator.pop(context);
+                                            } ,
+                                            child: const Text('Mien Phi')
+                                        ),
+                                      ],
+                                    ),
+                                  );
+
+                                },
+                            );
+                          },
+                          child: Container(
+                            height: 44,
+                            width: 343,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Text('Giảm % giá món'),
-                              SvgPicture.asset('images/icon/ic_arrow_down.svg')
-                            ],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(reduceTypeSelected),
+                                SvgPicture.asset('images/icon/ic_arrow_down.svg')
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -303,7 +432,18 @@ class _KhuyenMaiPageState extends State<KhuyenMaiPage> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailSaleOff(),)),
+                  onTap: ()=> Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  DetailSaleOff(
+                        startTime: _timeOfDay,
+                        startDate: _dateTime,
+                        endTime: endTime,
+                        endDate: endDate,
+                        nameController: nameController,
+                        giamGiaController: reduceController,
+                        reduceTypeSelected: reduceTypeSelected
+                      ),
+                      )),
                   child: Container(
                     height: 44,
                     width: 166,
